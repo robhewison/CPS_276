@@ -1,24 +1,30 @@
 <?php
 
-$mainListItems = 5;
+//declare variables for main and subsections of the list
+$mainListItems = 4;
 $subListItems = 5;
 
-$nestedList = "<ul>";
+function createNestedList($mainNum, $subNum) {
+    $nestedList = "<ul>";
 
-for ($i = 1; $i <= $mainListItems; $i++) {
-  $nestedList .= "<li>$i";
-  $nestedList .= "<ul>";
+    for ($i = 1; $i <= $mainNum; $i++) {
+    $nestedList .= "<li>$i";
+    $nestedList .= "<ul>";
   
-  for ($j = 1; $j <= $subListItems
-; $j++) {
-    $nestedList .= "<li>$j</li>";
-  }
+        for ($j = 1; $j <= $subNum; $j++) {
+            $nestedList .= "<li>$j</li>";
+    }
   
   $nestedList .= "</ul>";
   $nestedList .= "</li>";
 }
 
 $nestedList .= "</ul>";
+
+return $nestedList;
+}
+
+$nestedList = createNestedList($mainListItems, $subListItems)
 
 ?>
 
