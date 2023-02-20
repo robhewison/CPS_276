@@ -5,7 +5,7 @@ class Calculator {
     public function calc($operator, $num1=null, $num2=null) {
   
         if (!is_string($operator) || !is_numeric($num1) || !is_numeric($num2)) {
-            return "You must enter a string and two numbers";
+            return "You must enter a string and two numbers" . "<br>";
         }
       switch($operator) {
         case '+':
@@ -33,7 +33,7 @@ class Calculator {
           break;
       }
   
-      return $message;
+      return $message . "<br>";
     }
   }
 
