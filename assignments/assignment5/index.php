@@ -47,11 +47,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </head>
     <body>
         <div class="container">
-
             <h1>File and Directory Assignment</h1>
 
             <?php if (!empty($message)) { ?>
             <p><?php echo $message; ?></p>
+            <?php } ?>
+
+            <?php if (!empty($filepath)) { ?>
+            <p><a href="<?php echo $filepath; ?>" target="_blank">Path where file is located</a></p>
             <?php } ?>
 
             <form method="post">
@@ -64,11 +67,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <input type="submit" class="btn btn-primary" value="Submit">
             </form>
         </div>
-
-    <?php if (!empty($filepath)) { ?>
-        <p><a href="<?php echo $filepath; ?>" target="_blank">Path where file is located</a></p>
-    <?php } ?>
-
     </body>
 </html>
 
