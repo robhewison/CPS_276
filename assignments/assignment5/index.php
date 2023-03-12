@@ -1,9 +1,7 @@
 <?php
 
- // include the Directories class
 require_once('Directories.php');
 
- // initialize variables
 $dirname = '';
 $content = '';
 $message = '';
@@ -48,6 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <body>
         <div class="container">
             <h1>File and Directory Assignment</h1>
+            <p>Enter a folder name and the contents of a file. Folder names should contain alpha numeric characters only.</p>
 
             <?php if (!empty($message)) { ?>
             <p><?php echo $message; ?></p>
