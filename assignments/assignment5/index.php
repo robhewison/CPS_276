@@ -38,26 +38,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Assignment 5</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     </head>
     <body>
-        <h1>File and Directory Assignment</h1>
+        <div class="container">
 
-        <?php if (!empty($message)) { ?>
-        <p><?php echo $message; ?></p>
-        <?php } ?>
+            <h1>File and Directory Assignment</h1>
 
-        <form method="post">
-            <label for="dirname">Folder Name</label>
-            <input type="text" id="dirname" name="dirname" value="<?php echo htmlspecialchars($dirname); ?>" required>
-            <br>
-            <label for="content">File Content</label>
-            <textarea id="content" name="content" rows="5" cols="30"><?php echo htmlspecialchars($content); ?></textarea>
-            <br>
-            <input type="submit" value="Submit">
-        </form>
+            <?php if (!empty($message)) { ?>
+            <p><?php echo $message; ?></p>
+            <?php } ?>
+
+            <form method="post">
+                <label for="dirname" class="form-label">Folder Name</label>
+                <input type="text" id="dirname" name="dirname" class="form-control" value="<?php echo htmlspecialchars($dirname); ?>" required>
+                <br>
+                <label for="content" class="form-label">File Content</label>
+                <textarea id="content" name="content" class="form-control" rows="5" cols="30"><?php echo htmlspecialchars($content); ?></textarea>
+                <br>
+                <input type="submit" class="btn btn-primary" value="Submit">
+            </form>
+        </div>
 
     <?php if (!empty($filepath)) { ?>
         <p><a href="<?php echo $filepath; ?>" target="_blank">Path where file is located</a></p>
