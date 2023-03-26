@@ -1,5 +1,5 @@
 <?php
-require_once "Pdo_methods.php";
+require_once("Pdo_methods.php");
 
 class FileUploadProc extends PdoMethods {
     public function uploadFile($fileName, $fileTmpName, $fileSize) {

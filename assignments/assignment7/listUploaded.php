@@ -1,5 +1,5 @@
 <?php
-require_once "listFilesProc.php";
+require_once("ListFilesProc.php");
 $listFiles = new ListFilesProc();
 $filesList = $listFiles->listFiles();
 ?>

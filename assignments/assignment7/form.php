@@ -1,5 +1,5 @@
 <?php
-require_once "fileUploadProc.php";
+require_once('FileUploadProc.php');
 $upload = new FileUploadProc();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
