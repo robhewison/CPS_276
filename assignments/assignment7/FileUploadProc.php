@@ -22,4 +22,17 @@ class FileUploadProc extends PdoMethods {
             return 'The file must be a PDF and its size should be under 100000 bytes.';
         }
     }
+
+    public function handleUpload() {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $file = $_FILES['pdf'];
+            $fileName = $_POST['file_name'];
+            $fileTmpName = $file['tmp_name'];
+            $fileSize = $file['size'];
+        
+            //$message = $upload->uploadFile($fileName, $fileTmpName, $fileSize);
+            return $this->uploadFile($fileName, $fileTmpName, $fileSize);
+        }
+        return null;
+    }
 }

@@ -4,14 +4,22 @@ $listFiles = new ListFilesProc();
 $filesList = $listFiles->listFiles();
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Uploaded Files</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List Files</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 </head>
 <body>
-    <h1>Uploaded Files</h1>
-    <?php
-    echo $filesList;
-    ?>
+    <div class="container">
+        <h1>List Files</h1>
+
+        <p><a href="form.php">Add file</a></p>
+
+        <?php
+        echo $filesList;
+        ?>
+    </div>
 </body>
-</html
+</html>
