@@ -17,6 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <title>File Upload</title>
 </head>
 <body>
+    <p><a href="listUploaded.php">View Uploaded Files</a></p>
     <!-- should it be... <form action="" method="post" enctype="application/pdf"> -->
     <form action="" method="post" enctype="multipart/form-data">
         <input type="text" name="file_name" placeholder="Enter file name" required><br>
