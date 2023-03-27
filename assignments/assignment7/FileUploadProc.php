@@ -16,7 +16,7 @@ class FileUploadProc extends PdoMethods {
                 return 'There was an error uploading the file.';
             } else {
                 move_uploaded_file($fileTmpName, $fileDestination);
-                return 'File uploaded successfully.';
+                return 'File has been added.';
             }
         } else {
             if(mime_content_type($fileTmpName) !== "application/pdf") {
