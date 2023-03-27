@@ -19,7 +19,15 @@ class FileUploadProc extends PdoMethods {
                 return 'File uploaded successfully.';
             }
         } else {
-            return 'The file must be a PDF and its size should be under 100000 bytes.';
+            if(mime_content_type($fileTmpName) !== "application/pdf") {
+                return 'File must be a pdf file';
+            }
+            else if ($fileSize >= 100000) {
+                return 'File is too big';
+            }
+            else {
+                return 'unexpected error has occurred';
+            }
         }
     }
 

@@ -1,10 +1,12 @@
 <?php
-require_once('FileUploadProc.php');
 
+//I made an effort to include as little php as possible in this file
+require_once('FileUploadProc.php');
 $upload = new FileUploadProc();
 $message = $upload->handleUpload();
 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,7 +28,6 @@ $message = $upload->handleUpload();
             }
         ?>
 
-        <!-- should it be... <form action="" method="post" enctype="application/pdf"> -->
         <form action="" method="post" enctype="multipart/form-data">
             <label for="file_name" class="form-label">File Name</label>
             <br>
