@@ -3,7 +3,7 @@ require_once '../classes/Pdo_methods.php';
 
 $response = [];
 
-// Retrieve all names from the database
+// Retrieve all names from the database in ascending order
 $pdo = new PdoMethods();
 $sql = 'SELECT name FROM names ORDER BY name ASC';
 $records = $pdo->selectNotBinded($sql);

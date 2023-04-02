@@ -10,7 +10,7 @@ if (isset($_POST['data'])) {
         $nameParts = explode(" ", $fullName);
         $formattedName = $nameParts[1] . ", " . $nameParts[0];
 
-        // Insert into database
+        // Insert the name into database
         $pdo = new PdoMethods();
         $sql = "INSERT INTO names (name) VALUES (:name)";
         $bindings = array(
