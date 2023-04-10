@@ -18,7 +18,7 @@ class Date_time {
 
     private function addNote() {
         if (empty($_POST['dateTime']) || empty($_POST['note'])) {
-            return '<p>Please enter a date, time, and note.</p>';
+            return '<p>Please enter a date, time, and note</p>';
         }
 
         $dateTime = strtotime($_POST['dateTime']);
@@ -32,7 +32,7 @@ class Date_time {
         $result = $this->pdo->otherBinded($sql, $bindings);
 
         if ($result === 'noerror') {
-            return '<p>Note added successfully!</p>';
+            return '<p>Note has been added</p>';
         } else {
             return '<p>There was an error adding the note.</p>';
         }
@@ -40,7 +40,7 @@ class Date_time {
 
     private function getNotes() {
         if (empty($_POST['begDate']) || empty($_POST['endDate'])) {
-            return '<p>Please select a beginning and ending date.</p>';
+            return '<p>Please select a beginning and ending date</p>';
         }
 
         $begDate = strtotime($_POST['begDate']);
@@ -54,11 +54,11 @@ class Date_time {
         $result = $this->pdo->selectBinded($sql, $bindings);
 
         if ($result === 'error') {
-            return '<p>There was an error retrieving the notes.</p>';
+            return '<p>There was an error retrieving the notes</p>';
         }
 
         if (count($result) === 0) {
-            return '<p>No notes found for the selected date range.</p>';
+            return '<p>No notes found for the date range selected</p>';
         }
 
         $output = '<table class="table table-bordered">
