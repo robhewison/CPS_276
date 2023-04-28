@@ -13,36 +13,41 @@ class Validation{
             case "email": return $this->email($value); break;
             case "dob": return $this->dob($value); break;
             case "password": return $this->password($value); break;
-            default: return 'error';
+            case "state": return $this->state($value); break;
+            default: return 'regex error';
         }
     }
 
     private function name($value){
-        return preg_match('/^[\p{L}\s\'\-]+$/u', $value) ? '' : 'error';
+        return preg_match('/^[\p{L}\s\'\-]+$/u', $value) ? '' : 'name error';
     }
 
     private function address($value){
-        return preg_match('/^\d+\s[\p{L}\s]+$/u', $value) ? '' : 'error';
+        return preg_match('/^\d+\s[\p{L}\s]+$/u', $value) ? '' : ' address error';
     }
 
     private function city($value){
-        return preg_match('/^[\p{L}\s]+$/u', $value) ? '' : 'error';
+        return preg_match('/^[\p{L}\s]+$/u', $value) ? '' : 'city error';
     }
 
     private function phone($value){
-        return preg_match('/^\d{3}\.\d{3}\.\d{4}$/', $value) ? '' : 'error';
+        return preg_match('/^\d{3}\.\d{3}\.\d{4}$/', $value) ? '' : 'phone error';
     }
 
     private function email($value){
-        return filter_var($value, FILTER_VALIDATE_EMAIL) ? '' : 'error';
+        return filter_var($value, FILTER_VALIDATE_EMAIL) ? '' : 'email error';
     }
 
     private function dob($value){
-        return preg_match('/^\d{2}\/\d{2}\/\d{4}$/', $value) ? '' : 'error';
+        return preg_match('/^\d{2}\/\d{2}\/\d{4}$/', $value) ? '' : 'dob error';
     }
 
     private function password($value){
-        return !empty($value) ? '' : 'error';
+        return !empty($value) ? '' : 'password error';
+    }
+
+    private function state($value){
+        return preg_match('/^[A-Z]{2}$/', $value) ? '' : 'state error';
     }
 }
 

@@ -1,7 +1,7 @@
 <?php
-session_start();
+//session_start();
 
-if (!isset($_SESSION["email"]) || $_SESSION["status"] !== "admin") {
+if (!isset($_SESSION["status"]) || $_SESSION["user_status"] !== "admin") {
     header("Location: index.php?page=login");
     exit();
 }
@@ -48,13 +48,16 @@ $admins = $pdo->selectNotBinded("SELECT * FROM admins");
 </head>
 <body>
     <div class="container">
-        <h1>Delete Admins</h1>
-        <form action="deleteAdmins.php" method="post">
+        <?php echo get_nav(); ?>
+        <h1>Delete Admin(s)</h1>
+        <form action="index.php?page=deleteAdmins" method="post">
+            <button type="submit" class="btn btn-danger">Delete</button>
             <table class="table table-striped">
                 <thead>
                     <tr>
                         <th>Name</th>
                         <th>Email</th>
+                        <th>Password</th>
                         <th>Status</th>
                         <th>Delete</th>
                     </tr>
@@ -64,9 +67,10 @@ $admins = $pdo->selectNotBinded("SELECT * FROM admins");
                         <tr>
                             <td><?php echo $admin["name"]; ?></td>
                             <td><?php echo $admin["email"]; ?></td>
+                            <td><?php echo $admin["password"]; ?></td>
                             <td><?php echo $admin["status"]; ?></td>
                             <td>
-                                <?php if ($admin["email"] !== $_SESSION["email"]): ?>
+                                <?php if ($admin["name"] !== $_SESSION["name"]): ?>
                                     <input type="checkbox" name="delete[]" value="<?php echo $admin["id"]; ?>">
                                 <?php endif; ?>
                             </td>
@@ -74,7 +78,6 @@ $admins = $pdo->selectNotBinded("SELECT * FROM admins");
                     <?php endforeach; ?>
                 </tbody>
             </table>
-            <button type="submit" class="btn btn-danger">Delete Selected Admin(s)</button>
         </form>
     </div>
 </body>

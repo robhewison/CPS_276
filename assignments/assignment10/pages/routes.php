@@ -4,24 +4,24 @@ function get_nav() {
     // Determine the user's role and display navigation links accordingly
     $nav_common = <<<HTML
         <nav>
-            <ul>
-                <li><a href="index.php?page=welcome">Welcome</a></li>
-                <li><a href="index.php?page=addContact">Add Contact</a></li>
-                <li><a href="index.php?page=deleteContacts">Delete contact(s)</a></li>
+            <ul class="list-unstyled">
+                <li class="d-inline-block"><a href="index.php?page=welcome" class="me-3">Welcome</a></li>
+                <li class="d-inline-block"><a href="index.php?page=addContact" class="me-3">Add Contact</a></li>
+                <li class="d-inline-block"><a href="index.php?page=deleteContacts" class="me-3">Delete contact(s)</a></li>
     HTML;
 
     $nav_admin = '';
     if (isset($_SESSION['user_status']) && $_SESSION['user_status'] === 'admin') {
         $nav_admin = <<<HTML
-                <li><a href="index.php?page=addAdmin">Add Admin</a></li>
-                <li><a href="index.php?page=deleteAdmins">Delete Admin(s)</a></li>
+                <li class="d-inline-block"><a href="index.php?page=addAdmin" class="me-3">Add Admin</a></li>
+                <li class="d-inline-block"><a href="index.php?page=deleteAdmins" class="me-3">Delete Admin(s)</a></li>
     HTML;
     }
 
     $nav_logout = '';
     if (isset($_SESSION['status']) && $_SESSION['status'] === 'loggedin') {
         $nav_logout = <<<HTML
-                <li><a href="logout.php">Logout</a></li>
+                <li class="d-inline-block"><a href="logout.php" class="me-3">Logout</a></li>
             </ul>
         </nav>
     HTML;

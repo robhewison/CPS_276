@@ -55,6 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
     <div class="container">
+        <?php echo get_nav(); ?>
         <h1>Add Admin</h1>
         <form action="index.php?page=addAdmin" method="post">
             <div class="form-group">

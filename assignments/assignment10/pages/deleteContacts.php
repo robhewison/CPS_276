@@ -1,5 +1,5 @@
 <?php
-session_start();
+//session_start();
 require_once "classes/Pdo_methods.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -44,6 +44,7 @@ $contacts = $pdo->selectNotBinded($sql);
 </head>
 <body>
     <div class="container">
+    <?php echo get_nav(); ?>
         <h1>Delete Contact(s)</h1>
         <?php if (count($contacts) == 0): ?>
             <p>There are no records to display</p>
