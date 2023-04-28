@@ -1,12 +1,11 @@
 <?php
-require_once "Pdo_methods.php";
-require_once "Validation.php";
+require_once "classes/Pdo_methods.php";
+require_once "classes/Validation.php";
 
-session_start();
+//session_start();
 
 if (isset($_SESSION['status']) && $_SESSION['status'] === 'loggedin') {
     header("Location: index.php?page=welcome");
-    //header("Location: welcome.php");
     exit;
 }
 
@@ -18,6 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $emailError = $validator->checkFormat($email, "email");
     $passwordError = $validator->checkFormat($password, "password");
+
 
     if ($emailError === '' && $passwordError === '') {
         $pdo = new PdoMethods();
@@ -33,16 +33,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $_SESSION['status'] = 'loggedin';
                 $_SESSION['name'] = $record['name'];
                 $_SESSION['user_status'] = $record['status'];
-                header("Location: welcome.php");
+                header("Location: index.php?page=welcome"); 
                 exit;
             } else {
-                $message = "Invalid email or password.";
+                $_SESSION['message'] = "Invalid email or password.";
             }
         } else {
-            $message = "Invalid email or password.";
+            $_SESSION['message'] = "Invalid email or password.";
         }
     } else {
-        $message = "Invalid email or password.";
+        $_SESSION['message'] = "Invalid email or password.";
     }
 }
 
@@ -57,14 +57,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 </head>
 <body>
+    <div class="container">
     <h1>Login</h1>
-    <?php if (isset($message)) echo "<p>$message</p>"; ?>
-    <form action="login.php" method="post">
-        <label for="email">Email:</label><br>
-        <input type="email" name="email" id="email" value="<?php echo isset($email) ? $email : ''; ?>" required><br>
-        <label for="password">Password:</label><br>
-        <input type="password" name="password" id="password" required><br>
-        <input type="submit" value="Login">
+    <?php if (isset($_SESSION['message'])) echo "<p>" . $_SESSION['message'] . "</p>"; ?>
+    <form action="index.php?page=login" method="post">
+        <label for="email" class="form-label">Email</label><br>
+        <input type="email" name="email" id="email" class="form-control" value="<?php echo isset($email) ? $email : ''; ?>" required><br>
+        <label for="password" class="form-label">Password</label><br>
+        <input type="password" name="password" class="form-control" id="password" required><br>
+        <input type="submit" value="Login" class="btn btn-primary">
     </form>
+    </div>
 </body>
 </html>

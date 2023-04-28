@@ -9,6 +9,49 @@ $pdo = new PdoMethods();
 $validate = new Validation();
 $sticky = new StickyForm();
 
+$elementsArr = [
+    'name' => [
+        'type' => 'text',
+        'regex' => 'name',
+        'errorMessage' => 'Please enter a valid name.'
+    ],
+    'address' => [
+        'type' => 'text',
+        'regex' => 'address',
+        'errorMessage' => 'Please enter a valid address.'
+    ],
+    'city' => [
+        'type' => 'text',
+        'regex' => 'city',
+        'errorMessage' => 'Please enter a valid city.'
+    ],
+    'state' => [
+        'type' => 'text',
+        'regex' => 'state',
+        'errorMessage' => 'Please enter a valid state.'
+    ],
+    'phone' => [
+        'type' => 'text',
+        'regex' => 'phone',
+        'errorMessage' => 'Please enter a valid phone number.'
+    ],
+    'email' => [
+        'type' => 'text',
+        'regex' => 'email',
+        'errorMessage' => 'Please enter a valid email address.'
+    ],
+    'password' => [
+        'type' => 'text',
+        'regex' => 'password',
+        'errorMessage' => 'Please enter a valid password.'
+    ],
+    'dob' => [
+        'type' => 'text',
+        'regex' => 'dob',
+        'errorMessage' => 'Please enter a valid date of birth.'
+    ]
+];
+
 // Check if the form has been submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Perform input validation
@@ -69,6 +112,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 }
+
+// <?php echo htmlspecialchars($_SERVER['PHP_SELF']); // in form action? 
 ?>
 
 <!DOCTYPE html>
@@ -89,7 +134,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <p style="color: red;"><?php echo $errorMessage; ?></p>
     <?php endif; ?>
 
-    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST">
+    <form action="index.php?page=addContact" method="POST">
         <label for="name">Name (letters only)</label>
         <input type="text" id="name" name="name" required>
         <br>
@@ -141,7 +186,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         -->
 
-        
         <input type="submit" value="Add Contact">
     </form>
 </body>

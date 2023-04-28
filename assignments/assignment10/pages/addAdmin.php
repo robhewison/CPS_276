@@ -56,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <div class="container">
         <h1>Add Admin</h1>
-        <form action="addAdmin.php" method="post">
+        <form action="index.php?page=addAdmin" method="post">
             <div class="form-group">
                 <label for="name">Name:</label>
                 <input type="text" class="form-control" id="name" name="name" value="<?php echo $name; ?>" required>
@@ -76,6 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <option value="admin" <?php echo ($status == "admin") ? "selected" : ""; ?>>Admin</option>
                 </select>
             </div>
+            <br>
             <button type="submit" class="btn btn-primary">Add Admin</button>
         </form>
     </div>

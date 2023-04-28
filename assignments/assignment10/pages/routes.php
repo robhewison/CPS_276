@@ -1,50 +1,70 @@
 <?php
-// Start the session to handle user access and authorization
-session_start();
 
-// Check if the 'page' parameter is set in the URL
-if (isset($_GET['page'])) {
-    // Get the value of the 'page' parameter from the URL
-    $page = $_GET['page'];
+function get_nav() {
+    // Determine the user's role and display navigation links accordingly
+    $nav_common = <<<HTML
+        <nav>
+            <ul>
+                <li><a href="index.php?page=welcome">Welcome</a></li>
+                <li><a href="index.php?page=addContact">Add Contact</a></li>
+                <li><a href="index.php?page=deleteContacts">Delete contact(s)</a></li>
+    HTML;
 
-    // Based on the value of the 'page' parameter, include the appropriate page
+    $nav_admin = '';
+    if (isset($_SESSION['user_status']) && $_SESSION['user_status'] === 'admin') {
+        $nav_admin = <<<HTML
+                <li><a href="index.php?page=addAdmin">Add Admin</a></li>
+                <li><a href="index.php?page=deleteAdmins">Delete Admin(s)</a></li>
+    HTML;
+    }
+
+    $nav_logout = '';
+    if (isset($_SESSION['status']) && $_SESSION['status'] === 'loggedin') {
+        $nav_logout = <<<HTML
+                <li><a href="logout.php">Logout</a></li>
+            </ul>
+        </nav>
+    HTML;
+    }
+
+    return $nav_common . $nav_admin . $nav_logout;
+}
+
+function get_content($page) {
+    ob_start();
     switch ($page) {
         case 'login':
-            // Include the login page
             require_once 'pages/login.php';
             break;
-
         case 'welcome':
-            // Include the welcome page
             require_once 'pages/welcome.php';
             break;
-
         case 'addContact':
-            // Include the add contact page
             require_once 'pages/addContact.php';
             break;
-
         case 'deleteContacts':
-            // Include the delete contacts page
             require_once 'pages/deleteContacts.php';
             break;
-
         case 'addAdmin':
-            // Include the add admin page
-            require_once 'pages/addAdmin.php';
+            // Check if user has admin privileges
+            if (isset($_SESSION['user_status']) && $_SESSION['user_status'] === 'admin') {
+                require_once 'pages/addAdmin.php';
+            } else {
+                header('Location: index.php?page=login');
+            }
             break;
-
         case 'deleteAdmins':
-            // Include the delete admins page
-            require_once 'pages/deleteAdmins.php';
+            // Check if user has admin privileges
+            if (isset($_SESSION['user_status']) && $_SESSION['user_status'] === 'admin') {
+                require_once 'pages/deleteAdmins.php';
+            } else {
+                header('Location: index.php?page=login');
+            }
             break;
-
         default:
             // Redirect to the login page if an invalid 'page' parameter is provided
             header('Location: index.php?page=login');
             break;
     }
-} else {
-    // Redirect to the login page if the 'page' parameter is not provided
-    header('Location: index.php?page=login');
+    return ob_get_clean();
 }

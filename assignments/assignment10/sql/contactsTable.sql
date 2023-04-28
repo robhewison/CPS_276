@@ -8,6 +8,6 @@ CREATE TABLE `contacts` (
   `email` varchar(255) NOT NULL,
   `dob` date NOT NULL,
   `contacts` varchar(255) NOT NULL,
-  `age` int(11) NOT NULL,
+  `age` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
