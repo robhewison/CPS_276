@@ -32,6 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if (password_verify($password, $record['password'])) {
                 $_SESSION['status'] = 'loggedin';
                 $_SESSION['name'] = $record['name'];
+                $_SESSION['email'] = $email; //should I keep this or remove it? 
                 $_SESSION['user_status'] = $record['status'];
                 header("Location: index.php?page=welcome"); 
                 exit;

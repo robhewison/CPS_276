@@ -5,9 +5,9 @@ function get_nav() {
     $nav_common = <<<HTML
         <nav>
             <ul class="list-unstyled">
-                <li class="d-inline-block"><a href="index.php?page=welcome" class="me-3">Welcome</a></li>
+                <!-- <li class="d-inline-block"><a href="index.php?page=welcome" class="me-3">Welcome</a></li> -->
                 <li class="d-inline-block"><a href="index.php?page=addContact" class="me-3">Add Contact</a></li>
-                <li class="d-inline-block"><a href="index.php?page=deleteContacts" class="me-3">Delete contact(s)</a></li>
+                <li class="d-inline-block"><a href="index.php?page=deleteContacts" class="me-3">Delete Contact(s)</a></li>
     HTML;
 
     $nav_admin = '';

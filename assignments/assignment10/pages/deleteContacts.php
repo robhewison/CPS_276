@@ -49,22 +49,35 @@ $contacts = $pdo->selectNotBinded($sql);
         <?php if (count($contacts) == 0): ?>
             <p>There are no records to display</p>
         <?php else: ?>
-            <form action="deleteContacts.php" method="post">
+            <form action="index.php?page=deleteContacts" method="post">
+                <button type="submit" name="delete" class="btn btn-danger mb-2">Delete</button>
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th>ID</th>
                             <th>Name</th>
+                            <th>Address</th>
+                            <th>City</th>
+                            <th>State</th>
+                            <th>Phone</th>
                             <th>Email</th>
+                            <th>DOB</th>
+                            <th>Contact</th>
+                            <th>Age</th>
                             <th>Delete</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php foreach ($contacts as $contact): ?>
                             <tr>
-                                <td><?php echo $contact["id"]; ?></td>
                                 <td><?php echo $contact["name"]; ?></td>
+                                <td><?php echo $contact["address"]; ?></td>
+                                <td><?php echo $contact["city"]; ?></td>
+                                <td><?php echo $contact["state"]; ?></td>
+                                <td><?php echo $contact["phone"]; ?></td>
                                 <td><?php echo $contact["email"]; ?></td>
+                                <td><?php echo date('m/d/Y', strtotime($contact["dob"])); ?></td>
+                                <td><?php echo $contact["contacts"]; ?></td>
+                                <td><?php echo $contact["age"]; ?></td>
                                 <td>
                                     <input type="checkbox" name="selected_contacts[]" value="<?php echo $contact["id"]; ?>">
                                 </td>
@@ -72,7 +85,6 @@ $contacts = $pdo->selectNotBinded($sql);
                         <?php endforeach; ?>
                     </tbody>
                 </table>
-                <button type="submit" name="delete" class="btn btn-danger">Delete Selected</button>
             </form>
         <?php endif; ?>
     </div>

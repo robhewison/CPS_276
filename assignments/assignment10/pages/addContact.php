@@ -68,7 +68,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $email = $_POST["email"];
         $phone = $_POST["phone"];
         $dob = DateTime::createFromFormat('m/d/Y', $_POST["dob"])->format('Y-m-d'); //$dob = $_POST["dob"];
-        $contacts = implode(', ', $_POST["contacts"]); //$contacts = $_POST["contacts"];
+
+        if (isset($_POST["contacts"])) {
+            $contacts = implode(', ', $_POST["contacts"]);
+        } else {
+            $contacts = "";
+        }
+        
         $age = $_POST["age"];
 
         // Insert the contact into the database
@@ -130,10 +136,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <?php if (isset($errorMessage)): ?>
         <p style="color: red;"><?php echo $errorMessage; ?></p>
-    <?php endif; ?>
-
-    <?php if (isset($errorMessage)): ?>
-        <p style="color: red;"><?php echo $errorMessage; ?></p>
         <?php if ($nameError): ?>
             <p style="color: red;"><?php echo $nameError; ?></p>
         <?php endif; ?>
@@ -169,12 +171,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <br>
         <label for="state">State</label>
         <select id="state" name="state" class="form-control" required>
-            <option value="">--Select a state--</option>
-            <option value="MI">MI</option>
-            <option value="OH">OH</option>
-            <option value="CA">CA</option>
-            <option value="WV">WV</option>
-            <option value="FL">FL</option>
+            <option value="Michigan" selected>Michigan</option>
+            <option value="Ohio">Ohio</option>
+            <option value="California">California</option>
+            <option value="West Virgina">West Virginia</option>
+            <option value="Florida">Florida</option>
         </select>
         <br>
         <label for="phone">Phone</label>
@@ -213,17 +214,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <input type="radio" id="age50+" name="age" value="50+">
         <label for="age50+">50+</label><br><br>
         </div>
-
-        <!--
-        
-        <label for="contact">Please check all contact types you would like (optional):</label>
-        <input type="text" id="contact" name="contact">
-        <br>
-        <label for="age">Please select an age range (you must select one):</label>
-        <input type="text" id="age" name="age" required>
-        <br>
-        
-        -->
 
         <input type="submit" class="btn btn-primary" value="Add Contact">
     </form>

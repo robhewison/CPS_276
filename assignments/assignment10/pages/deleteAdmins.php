@@ -37,6 +37,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 $pdo = new PdoMethods();
 $admins = $pdo->selectNotBinded("SELECT * FROM admins");
+
+//the code below is for debugging purposes
+//var_dump($admins);
+//var_dump($_SESSION);
 ?>
 
 <!DOCTYPE html>
@@ -51,8 +55,8 @@ $admins = $pdo->selectNotBinded("SELECT * FROM admins");
         <?php echo get_nav(); ?>
         <h1>Delete Admin(s)</h1>
         <form action="index.php?page=deleteAdmins" method="post">
-            <button type="submit" class="btn btn-danger">Delete</button>
-            <table class="table table-striped">
+            <button type="submit" class="btn btn-danger mb-2">Delete</button>
+            <table class="table table-striped table-hover table-bordered">
                 <thead>
                     <tr>
                         <th>Name</th>
@@ -70,7 +74,7 @@ $admins = $pdo->selectNotBinded("SELECT * FROM admins");
                             <td><?php echo $admin["password"]; ?></td>
                             <td><?php echo $admin["status"]; ?></td>
                             <td>
-                                <?php if ($admin["name"] !== $_SESSION["name"]): ?>
+                                <?php if ($admin["email"] !== $_SESSION["email"]): ?>
                                     <input type="checkbox" name="delete[]" value="<?php echo $admin["id"]; ?>">
                                 <?php endif; ?>
                             </td>

@@ -19,35 +19,35 @@ class Validation{
     }
 
     private function name($value){
-        return preg_match('/^[\p{L}\s\'\-]+$/u', $value) ? '' : 'name error';
+        return preg_match('/^[\p{L}\s\'\-]+$/u', $value) ? '' : 'Name error';
     }
 
     private function address($value){
-        return preg_match('/^\d+\s[\p{L}\s]+$/u', $value) ? '' : ' address error';
+        return preg_match('/^\d+\s[\p{L}\s]+$/u', $value) ? '' : ' Address error';
     }
 
     private function city($value){
-        return preg_match('/^[\p{L}\s]+$/u', $value) ? '' : 'city error';
+        return preg_match('/^[\p{L}\s]+$/u', $value) ? '' : 'City error';
     }
 
     private function phone($value){
-        return preg_match('/^\d{3}\.\d{3}\.\d{4}$/', $value) ? '' : 'phone error';
+        return preg_match('/^\d{3}\.\d{3}\.\d{4}$/', $value) ? '' : 'Phone error: should be in 123.456.7890 format';
     }
 
     private function email($value){
-        return filter_var($value, FILTER_VALIDATE_EMAIL) ? '' : 'email error';
+        return filter_var($value, FILTER_VALIDATE_EMAIL) ? '' : 'Email error: should be in example@test.com format';
     }
 
     private function dob($value){
-        return preg_match('/^\d{2}\/\d{2}\/\d{4}$/', $value) ? '' : 'dob error';
-    }
-
-    private function password($value){
-        return !empty($value) ? '' : 'password error';
+        return preg_match('/^\d{2}\/\d{2}\/\d{4}$/', $value) ? '' : 'Date of Birth error: should be in mm/dd/yyyy format';
     }
 
     private function state($value){
-        return preg_match('/^[A-Z]{2}$/', $value) ? '' : 'state error';
+        return preg_match('/^[a-zA-Z ]{5,30}$/', $value) ? '' : 'State error: must be a valid state';
+    }
+
+    private function password($value){
+        return !empty($value) ? '' : 'Password error: password cannot be empty';
     }
 }
 
