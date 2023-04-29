@@ -38,6 +38,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 $pdo = new PdoMethods();
 $admins = $pdo->selectNotBinded("SELECT * FROM admins");
 
+if ($admins === "noerror") {
+    $successMessage = "Contact successfully added!";
+}
+
 //the code below is for debugging purposes
 //var_dump($admins);
 //var_dump($_SESSION);

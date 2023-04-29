@@ -1,12 +1,35 @@
 <?php
 // Include the PdoMethods class
 require_once "classes/Pdo_methods.php";
+require_once "classes/Validation.php";
 
 // Initialize variables for the form fields
 $name = "";
 $email = "";
 $password = "";
 $status = "";
+
+$nameError = "";
+$emailError = "";
+$passwordError = "";
+$statusError = "";
+
+function emailExists($email, $pdo) {
+    $sql = "SELECT COUNT(*) as count FROM admins WHERE email = :email";
+    $bindings = [
+        [':email', $email, 'str']
+    ];
+    $result = $pdo->otherBinded($sql, $bindings);
+
+    if (is_string($result)) {
+        // If there is an error with the query, return an empty string
+        return "";
+    } elseif ($result[0]['count'] > 0) {
+        return "This email address is already in use.";
+    } else {
+        return "";
+    }
+}
 
 // Check if the form has been submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -16,32 +39,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST["password"];
     $status = $_POST["status"];
 
-    // Hash the password for security
-    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
-    // Create an instance of the PdoMethods class
+    $validate = new Validation();
     $pdo = new PdoMethods();
 
-    // Create SQL query to insert the new admin into the database
-    $sql = "INSERT INTO admins (name, email, password, status) VALUES (:name, :email, :password, :status)";
+    $nameError = $validate->checkFormat($name, "name");
+    $emailError = $validate->checkFormat($email, "email") ?: emailExists($email, $pdo);
+    $passwordError = $validate->checkFormat($password, "password");
 
-    // Create bindings array for the SQL query
-    $bindings = [
-        [":name", $name, "str"],
-        [":email", $email, "str"],
-        [":password", $hashed_password, "str"],
-        [":status", $status, "str"],
-    ];
+    if (!$nameError && !$emailError && !$passwordError) {
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-    // Execute the SQL query using the PdoMethods class
-    $result = $pdo->otherBinded($sql, $bindings);
+        $pdo = new PdoMethods();
 
-    // Check the result of the SQL query
-    if ($result == "noerror") {
-        echo "Admin has been added successfully!";
-    } else {
+        $sql = "INSERT INTO admins (name, email, password, status) VALUES (:name, :email, :password, :status)";
+
+        $bindings = [
+            [":name", $name, "str"],
+            [":email", $email, "str"],
+            [":password", $hashed_password, "str"],
+            [":status", $status, "str"],
+        ];
+
+        $result = $pdo->otherBinded($sql, $bindings);
+
+            // Check the result of the SQL query
+        if ($result == "noerror") {
+            //echo "Admin has been added successfully!";
+            $successMessage = "Admin has been added successfully!";
+        } else {
         echo "There was an error adding the admin.";
+        }
     }
+
 }
 
 ?>
@@ -57,18 +86,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="container">
         <?php echo get_nav(); ?>
         <h1>Add Admin</h1>
+
+        <?php if (isset($successMessage)): ?>
+        <p style="color: green;"><?php echo $successMessage; ?></p>
+        <?php endif; ?>
+
         <form action="index.php?page=addAdmin" method="post">
             <div class="form-group">
                 <label for="name">Name:</label>
                 <input type="text" class="form-control" id="name" name="name" value="<?php echo $name; ?>" required>
+                <span class="text-danger"><?php echo $nameError; ?></span>
             </div>
             <div class="form-group">
                 <label for="email">Email:</label>
                 <input type="email" class="form-control" id="email" name="email" value="<?php echo $email; ?>" required>
+                <span class="text-danger"><?php echo $emailError; ?></span>
             </div>
             <div class="form-group">
                 <label for="password">Password:</label>
-                <input type="password" class="form-control" id="password" name="password" required>
+                <input type="password" class="form-control" id="password" name="password" value="<?php echo $password; ?>" required>
+                <span class="text-danger"><?php echo $passwordError; ?></span>
             </div>
             <div class="form-group">
                 <label for="status">Status:</label>
@@ -78,7 +115,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </select>
             </div>
             <br>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary">Add Admin</button>
         </form>
     </div>
 </body>

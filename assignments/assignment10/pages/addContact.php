@@ -2,48 +2,93 @@
 // Include required classes
 require_once "classes/Pdo_methods.php";
 require_once "classes/Validation.php";
-require_once "classes/StickyForms.php";
 
 // Create instances of required classes
 $pdo = new PdoMethods();
 $validate = new Validation();
-$sticky = new StickyForm();
+
+$errorMessage = "";
+
+$nameError = "";
+$addressError = "";
+$cityError = "";
+$stateError = "";
+$phoneError = "";
+$emailError = "";
+$dobError = "";
 
 $elementsArr = [
+    "masterStatus"=>[
+        "status"=>"noerrors",
+        "type"=>"masterStatus"
+      ],
     'name' => [
         'type' => 'text',
         'regex' => 'name',
-        'errorMessage' => 'Please enter a valid name.'
+        "errorMessage"=>"<span style='color: red; margin-left: 15px;'>Name cannot be blank and must be a standard name</span>",
+        "errorOutput"=>"",
+        'stickyValue' => 'Robert Hewison'
     ],
     'address' => [
         'type' => 'text',
         'regex' => 'address',
-        'errorMessage' => 'Please enter a valid address.'
+        'errorMessage' => 'Please enter a valid address.',
+        "errorOutput"=>"",
+        'stickyValue' => '123 Someplace'
     ],
     'city' => [
         'type' => 'text',
         'regex' => 'city',
-        'errorMessage' => 'Please enter a valid city.'
+        'errorMessage' => 'Please enter a valid city.',
+        "errorOutput"=>"",
+        'stickyValue' => 'Anywhere'
     ],
     'phone' => [
         'type' => 'text',
         'regex' => 'phone',
-        'errorMessage' => 'Please enter a valid phone number.'
+        'errorMessage' => 'Please enter a valid phone number.',
+        "errorOutput"=>"",
+        'stickyValue' => '999.999.9999'
     ],
     'email' => [
         'type' => 'text',
         'regex' => 'email',
-        'errorMessage' => 'Please enter a valid email address.'
+        'errorMessage' => 'Please enter a valid email address.',
+        "errorOutput"=>"",
+        'stickyValue' => 'rwhewison@test.com'
     ],
     'password' => [
         'type' => 'text',
         'regex' => 'password',
-        'errorMessage' => 'Please enter a valid password.'
+        'errorMessage' => 'Please enter a valid password.',
+        "errorOutput"=>"",
     ],
     'dob' => [
         'type' => 'text',
         'regex' => 'dob',
-        'errorMessage' => 'Please enter a valid date of birth.'
+        'errorMessage' => 'Please enter a valid date of birth.',
+        "errorOutput"=>"",
+        'stickyValue' => '12/25/1999'
+    ],
+    'state' => [
+        'type' => 'select',
+        'regex' => 'state',
+        'errorMessage' => 'Please enter a valid state.',
+        "errorOutput"=>"",
+        "options"=>["Michigan"=>"Michigan","Ohio"=>"Ohio","Pennslyvania"=>"Pennslyvania","Texas"=>"Texas", "Florida"=>"Florida"],
+		"selected"=>"Michigan"
+    ],
+    "contacts"=>[
+        "errorMessage"=>"please enter a valid contact type",
+        "errorOutput"=>"",
+        "type"=>"checkbox",
+        "action"=>"required",
+        "values"=>["Newsletter"=>"Newsletter", "Email Updates"=>"Email Updates", "Text Updates"=>"Text Updates"]
+      ],
+    "age"=>[
+        "action"=>"Required",
+        "type"=>"radio",
+        "value"=>["10-18"=>"10-18", "19-30"=>"19-30", "30-50"=>"30-50", "50+"=>"50+"]
     ]
 ];
 
@@ -57,7 +102,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $phoneError = $validate->checkFormat($_POST["phone"], "phone");
     $emailError = $validate->checkFormat($_POST["email"], "email");
     $dobError = $validate->checkFormat($_POST["dob"], "dob");
-  
+
+
+    $elementsArr['name']['stickyValue'] = $_POST['name'];
+    $elementsArr['address']['stickyValue'] = $_POST['address'];
+    $elementsArr['city']['stickyValue'] = $_POST['city'];
+    $elementsArr['phone']['stickyValue'] = $_POST['phone'];
+    $elementsArr['email']['stickyValue'] = $_POST['email'];
+    $elementsArr['dob']['stickyValue'] = $_POST['dob'];
+    $elementsArr['state']['selected'] = $_POST['state'];
+
     
     // Check if there are no validation errors
     if (!$nameError && !$emailError && !$phoneError && !$addressError && !$cityError && !$dobError) {
@@ -96,23 +150,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Check if the insertion was successful
         if ($result === "noerror") {
-            $successMessage = "Contact successfully added!";
+            $successMessage = "Contact Information Added";
         } else {
             $errorMessage = "There was an error adding the contact. Please try again.";
         }
-    } else {
-        // Display validation errors
-        $errorMessage = "Please correct the following errors:<br>";
-        if ($nameError) {
-            $errorMessage .= "- Invalid name.<br>";
-        }
-        if ($emailError) {
-            $errorMessage .= "- Invalid email.<br>";
-        }
-        if ($phoneError) {
-            $errorMessage .= "- Invalid phone number.<br>";
-        }
-    }
+    } 
 }
 
 // <?php echo htmlspecialchars($_SERVER['PHP_SELF']); // in form action? 
@@ -161,31 +203,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <form action="index.php?page=addContact" method="POST">
         <label for="name">Name (letters only)</label>
-        <input type="text" id="name" name="name" class="form-control" required>
+        <input type="text" id="name" name="name" class="form-control" value="<?php echo htmlspecialchars($elementsArr['name']['stickyValue']); ?>" required>
         <br>
         <label for="address">Address (just number and street)</label>
-        <input type="text" id="address" name="address" class="form-control" required>
+        <input type="text" id="address" name="address" class="form-control" value="<?php echo htmlspecialchars($elementsArr['address']['stickyValue']); ?>" required>
         <br>
         <label for="city">City</label>
-        <input type="text" id="city" name="city" class="form-control" required>
+        <input type="text" id="city" name="city" class="form-control" value="<?php echo htmlspecialchars($elementsArr['city']['stickyValue']); ?>" required>
         <br>
         <label for="state">State</label>
         <select id="state" name="state" class="form-control" required>
-            <option value="Michigan" selected>Michigan</option>
-            <option value="Ohio">Ohio</option>
-            <option value="California">California</option>
-            <option value="West Virgina">West Virginia</option>
-            <option value="Florida">Florida</option>
+        <?php foreach ($elementsArr['state']['options'] as $value => $text): ?>
+        <option value="<?php echo htmlspecialchars($value); ?>" <?php echo $value == $elementsArr['state']['selected'] ? 'selected' : ''; ?>><?php echo htmlspecialchars($text); ?></option>
+        <?php endforeach; ?>
         </select>
         <br>
         <label for="phone">Phone</label>
-        <input type="text" id="phone" name="phone" class="form-control" required>
+        <input type="text" id="phone" name="phone" class="form-control" value="<?php echo htmlspecialchars($elementsArr['phone']['stickyValue']); ?>" required>
         <br>
         <label for="email">Email address</label>
-        <input type="email" id="email" name="email" class="form-control" required>
+        <input type="email" id="email" name="email" class="form-control" value="<?php echo htmlspecialchars($elementsArr['email']['stickyValue']); ?>" required>
         <br>
         <label for="dob">Date of birth</label>
-        <input type="text" id="dob" name="dob" class="form-control" required>
+        <input type="text" id="dob" name="dob" class="form-control" value="<?php echo htmlspecialchars($elementsArr['dob']['stickyValue']); ?>" required>
         <br>
 
         <div class="form-group">
@@ -220,3 +260,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 </body>
 </html>
+

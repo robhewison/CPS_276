@@ -19,11 +19,11 @@ class Validation{
     }
 
     private function name($value){
-        return preg_match('/^[\p{L}\s\'\-]+$/u', $value) ? '' : 'Name error';
+        return preg_match('/^[\p{L}\s\'\-]+$/u', $value) ? '' : 'Name error: should only be letters and spaces';
     }
 
     private function address($value){
-        return preg_match('/^\d+\s[\p{L}\s]+$/u', $value) ? '' : ' Address error';
+        return preg_match('/^\d+\s[\p{L}\s]+$/u', $value) ? '' : ' Address error: should be in Number and Street format';
     }
 
     private function city($value){

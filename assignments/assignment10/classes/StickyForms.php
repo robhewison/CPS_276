@@ -77,5 +77,6 @@ class StickyForm extends Validation {
 		}
 		return $options;
 	}
+
 }
 ?>

@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         if (count($errors) == 0) {
-            echo "Contact(s) deleted successfully!";
+            $successMessage = "Contact(s) deleted successfully!";
         } else {
             echo "Could not delete the contacts with IDs: " . implode(", ", $errors);
         }
@@ -46,6 +46,11 @@ $contacts = $pdo->selectNotBinded($sql);
     <div class="container">
     <?php echo get_nav(); ?>
         <h1>Delete Contact(s)</h1>
+
+        <?php if (isset($successMessage)): ?>
+        <p style="color: green;"><?php echo $successMessage; ?></p>
+        <?php endif; ?>
+
         <?php if (count($contacts) == 0): ?>
             <p>There are no records to display</p>
         <?php else: ?>
