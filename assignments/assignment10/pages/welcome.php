@@ -5,6 +5,9 @@ if (!isset($_SESSION['status']) || $_SESSION['status'] !== 'loggedin') {
 }
 
 /*
+
+// This code was used previously. I'm just keeping it commented out for reference purposes.
+
 if ($_SESSION['user_status'] === 'staff') {
     echo "<a href='index.php?page=addContact'>Add Contact</a>";
     echo "<a href='index.php?page=deleteContacts'>Delete Contact(s)</a>";

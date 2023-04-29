@@ -43,7 +43,7 @@ class Validation{
     }
 
     private function state($value){
-        return preg_match('/^[a-zA-Z ]{5,30}$/', $value) ? '' : 'State error: must be a valid state';
+        return preg_match('/^[a-zA-Z ]{1,30}$/', $value) ? '' : 'State error: must be a valid state';
     }
 
     private function password($value){

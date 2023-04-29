@@ -30,7 +30,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($error) {
             echo "Could not delete the admin(s)";
         } else {
-            echo "Admin(s) deleted";
+            //echo "Admin(s) deleted";
+            $successMessage = "Admin(s) deleted";
         }
     }
 }
@@ -38,9 +39,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 $pdo = new PdoMethods();
 $admins = $pdo->selectNotBinded("SELECT * FROM admins");
 
-if ($admins === "noerror") {
-    $successMessage = "Contact successfully added!";
-}
 
 //the code below is for debugging purposes
 //var_dump($admins);
@@ -58,6 +56,11 @@ if ($admins === "noerror") {
     <div class="container">
         <?php echo get_nav(); ?>
         <h1>Delete Admin(s)</h1>
+
+        <?php if (isset($successMessage)): ?>
+        <p style="color: green;"><?php echo $successMessage; ?></p>
+        <?php endif; ?>
+
         <form action="index.php?page=deleteAdmins" method="post">
             <button type="submit" class="btn btn-danger mb-2">Delete</button>
             <table class="table table-striped table-hover table-bordered">

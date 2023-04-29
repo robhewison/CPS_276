@@ -75,7 +75,7 @@ $elementsArr = [
         'regex' => 'state',
         'errorMessage' => 'Please enter a valid state.',
         "errorOutput"=>"",
-        "options"=>["Michigan"=>"Michigan","Ohio"=>"Ohio","Pennslyvania"=>"Pennslyvania","Texas"=>"Texas", "Florida"=>"Florida"],
+        "options"=>["MI"=>"Michigan","OH"=>"Ohio","PA"=>"Pennslyvania","TX"=>"Texas", "FL"=>"Florida"],
 		"selected"=>"Michigan"
     ],
     "contacts"=>[

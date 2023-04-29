@@ -4,10 +4,10 @@ require_once "classes/Pdo_methods.php";
 require_once "classes/Validation.php";
 
 // Initialize variables for the form fields
-$name = "";
-$email = "";
-$password = "";
-$status = "";
+$name = "Robert Hewison";
+$email = "rwhewison@test.com";
+$password = "password";
+$status = "staff";
 
 $nameError = "";
 $emailError = "";
@@ -43,10 +43,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $pdo = new PdoMethods();
 
     $nameError = $validate->checkFormat($name, "name");
-    $emailError = $validate->checkFormat($email, "email") ?: emailExists($email, $pdo);
+
+    $emailFormatError = $validate->checkFormat($email, "email");
+    if ($emailFormatError) {
+        $emailError = $emailFormatError;
+    } else {
+        $emailError = emailExists($email, $pdo);
+    }
+
     $passwordError = $validate->checkFormat($password, "password");
 
     if (!$nameError && !$emailError && !$passwordError) {
+
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
         $pdo = new PdoMethods();
