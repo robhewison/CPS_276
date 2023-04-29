@@ -34,6 +34,7 @@ class Validation{
         return preg_match('/^\d{3}\.\d{3}\.\d{4}$/', $value) ? '' : 'Phone error: should be in 123.456.7890 format';
     }
 
+    // php has a built-in regular expression for email validation that I'm using here
     private function email($value){
         return filter_var($value, FILTER_VALIDATE_EMAIL) ? '' : 'Email error: should be in example@test.com format';
     }
